@@ -1,0 +1,112 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        multiDexEnabled true
+        buildConfigField "String", "api_env", "\"" + String.valueOf(java.lang.System.properties['api_env']) + "\""
+        buildConfigField "String", "umeng_appkey", "\"" + String.valueOf(java.lang.System.properties['umeng_appkey']) + "\""
+        buildConfigField "String", "albc_appsecret", "\"" + String.valueOf(java.lang.System.properties['albc_appsecret']) + "\""
+        buildConfigField "String", "albc_appkey", "\"" + String.valueOf(java.lang.System.properties['albc_appkey']) + "\""
+        buildConfigField "String", "appType", "\"" + String.valueOf(java.lang.System.properties['appType']) + "\""
+        ndk {
+            abiFilters 'armeabi'//, 'armeabi-v7a' //, 'x86', 'x86_64', 'arm64-v8a'
+        }
+
+        aaptOptions.cruncherEnabled = false
+        aaptOptions.useNewCruncher = false
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: rootProject.ext.ApplicationId,
+                JPUSH_APPKEY : "72f696e4696982ee449dd1e0",
+                JPUSH_CHANNEL: "duia",
+                APPPKGNAME   : rootProject.ext.ApplicationId
+        ]
+
+    }
+
+
+    dexOptions {
+        javaMaxHeapSize "4g" //specify the heap size for the dex process
+        preDexLibraries = false //delete the already predexed libraries
+    }
+
+    signingConfigs {//签名信息
+        release {
+            storeFile file("keystore")
+            storePassword "123456"
+            keyAlias "highso"
+            keyPassword "123456"
+//            v2SigningEnabled false  // 作用是只使用旧版签名，禁用V2版签名模式
+        }
+    }
+
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'src/proguard.cfg'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'src/proguard.cfg'
+            signingConfig signingConfigs.release
+        }
+    }
+    productFlavors {
+
+
+    }
+        packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        pickFirst 'lib/armeabi/libstlport_shared.so'
+        pickFirst 'lib/armeabi/libucamf.so'
+        pickFirst 'lib/armeabi/libmsc.so'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation rootProject.ext.libraries.supportV4
+    testImplementation rootProject.ext.libraries.junit
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation rootProject.ext.libraries.rxlifecycle
+    implementation rootProject.ext.libraries.rxlifecycle_android
+    implementation rootProject.ext.libraries.rxlifecycle_components
+    implementation rootProject.ext.libraries.rxjava2
+    implementation rootProject.ext.libraries.butterknife
+    implementation rootProject.ext.libraries.stetho_okhttp3
+    implementation rootProject.ext.libraries.stetho
+    implementation rootProject.ext.libraries.rxpermissions2
+
+
+    implementation rootProject.ext.libraries.converter_gson
+    implementation rootProject.ext.libraries.retrofit2
+    implementation rootProject.ext.libraries.adapter_rxjava2
+    implementation rootProject.ext.libraries.stetho_okhttp3
+    implementation rootProject.ext.libraries.stetho
+    implementation rootProject.ext.libraries.logging_interceptor
+
+    testImplementation rootProject.ext.libraries.junit
+
+    implementation project(':HttpUtil')
+    implementation project(':Mvp')
+    implementation project(':DatabaseUtil')
+    implementation project(':StudyCommonutil')
+    implementation project(':DatabaseUtil')
+    implementation project(':StudyReportUtil')
+
+
+}

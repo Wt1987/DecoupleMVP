@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">HttpUtil</string>
+    <string name="no_network">没有网络</string>
+    <string name="network_error">请求异常</string>
+</resources>

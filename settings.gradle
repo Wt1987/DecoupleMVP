@@ -1,0 +1,14 @@
+include ':MathStudy', ':HttpUtil', ':StudyCommonutil', ':DatabaseUtil', ':StudyReportUtil', ':CommonUiWidget', ':CommonUiWidget', ':Mvp'
+
+//环境配置 release 正式环境
+//test 测试环境
+//rdtest 预发布环境
+//local 本地环境
+if (!System.properties['api_env']) {
+    System.properties['api_env'] = "release"
+}
+System.properties['umeng_appkey'] = "590aa24782b6351ad3001eef"
+System.properties['albc_appsecret'] = "7ea0df73665fd68abaf96fbff1f5635b"
+System.properties['albc_appkey'] = "23570001"
+System.properties['appType'] = "30"
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="LOCAL" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="$USER_HOME$/gradle/gradle-4.7" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/CommonUiWidget" />
+            <option value="$PROJECT_DIR$/DatabaseUtil" />
+            <option value="$PROJECT_DIR$/HttpUtil" />
+            <option value="$PROJECT_DIR$/MathStudy" />
+            <option value="$PROJECT_DIR$/Mvp" />
+            <option value="$PROJECT_DIR$/StudyCommonutil" />
+            <option value="$PROJECT_DIR$/StudyReportUtil" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
