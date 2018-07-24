@@ -8,9 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-import base.eventBus.BusImpl;
 import base.butterKnife.KnifeCommand;
+import base.eventBus.BusImpl;
 import mvp.delegate.FragmentDelegate;
 import mvp.delegate.FragmentDelegateImpl;
 import mvp.delegate.FragmentMvpDelegateCallback;
@@ -23,7 +22,7 @@ import mvp.present.IBasePresenter;
  * description:
  **/
 public abstract class StudyLazyRxFragment<P extends IBasePresenter, V extends IBaseView>
-        extends LazyFragment
+        extends BaseLazyFragment
         implements FragmentMvpDelegateCallback<P, V>, IBaseView {
     protected LayoutInflater layoutInflater;
     private View mRootView;
@@ -36,11 +35,12 @@ public abstract class StudyLazyRxFragment<P extends IBasePresenter, V extends IB
         layoutInflater = inflater;
         mFragmentDelegate = new FragmentDelegateImpl<>(this);
         mFragmentDelegate.onCreateView();
-
         if (mRootView == null && getLayoutId() > 0) {
             mRootView = inflater.inflate(getLayoutId(), null);
             bindUiCommand(mRootView);
         } else {
+            //复用之前的view，ViewPager+Fragment的使用过程
+            // ，可以用到避免重复创建view
             ViewGroup viewGroup = (ViewGroup) mRootView.getParent();
             if (viewGroup != null) {
                 viewGroup.removeView(mRootView);
@@ -48,6 +48,7 @@ public abstract class StudyLazyRxFragment<P extends IBasePresenter, V extends IB
         }
 
         return mRootView;
+
     }
 
 
@@ -102,15 +103,14 @@ public abstract class StudyLazyRxFragment<P extends IBasePresenter, V extends IB
         mFragmentDelegate.onStop();
     }
 
+
     /**
-     * 使用butternifer绑定控件
-     *
      * @param rootView
+     * 确定使用butternife绑定view
      */
     public void bindUiCommand(View rootView) {
         KnifeCommand.bind(this);
     }
-
     /**
      * 是否使用EventBus
      *
@@ -162,14 +162,24 @@ public abstract class StudyLazyRxFragment<P extends IBasePresenter, V extends IB
     public void bindEvent() {
 
     }
+    @Override
+    protected void onVisible(boolean isVisible) {
+        if (isVisible) {
+            //更新界面数据，如果数据还在下载中，就显示加载框
+
+        } else {
+            //关闭加载框
+
+        }
+    }
+
+    @Override
+    protected void onFirstVisible() {
+        //去服务器获取数据数据
+
+    }
 
 
-    /**
-     * 获取布局id
-     *
-     * @return
-     */
-    protected abstract int getLayoutId();
 
     protected abstract void initData();
 }

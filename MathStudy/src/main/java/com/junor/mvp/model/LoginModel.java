@@ -26,7 +26,13 @@ public class LoginModel {
 
     public LoginModel(){
 
-        mHttpApiService = HttpDirector.getInstance().getApiRetrofit().create(LoginHttpApiService.class);
+        HttpDirector.Builder mBuilder = new HttpDirector.Builder()
+                .connectTimeout(30)
+                .isUseLoger(true)
+                .responseTimeout(30)
+                .retry(8);
+
+        mHttpApiService = HttpDirector.getInstance().initHttpClient(mBuilder).create(LoginHttpApiService.class);
 
     }
 

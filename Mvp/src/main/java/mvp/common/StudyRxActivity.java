@@ -1,23 +1,16 @@
 package mvp.common;
 
 import android.app.Activity;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import base.eventBus.BusImpl;
 import base.butterKnife.KnifeCommand;
-import base.util.PermissionsResultListener;
+import base.eventBus.BusImpl;
 import mvp.delegate.ActivityDelegate;
 import mvp.delegate.ActivityDelegateImpl;
 import mvp.delegate.ActivityMvpDelegateCallback;

@@ -7,5 +7,5 @@ package com.util;
  **/
 
 public class UrlConstants {
-    public static final String API_SERVER_URL = "http://api.xxxx.cn/";//基础域名正式
+    public static final String API_SERVER_URL = "http://api.1196u.cn/";//基础域名正式
 }

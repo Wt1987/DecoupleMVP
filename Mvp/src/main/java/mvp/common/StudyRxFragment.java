@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
-import base.eventBus.BusImpl;
 import base.butterKnife.KnifeCommand;
+import base.eventBus.BusImpl;
 import mvp.delegate.FragmentDelegate;
 import mvp.delegate.FragmentDelegateImpl;
 import mvp.delegate.FragmentMvpDelegateCallback;
@@ -42,6 +42,8 @@ public abstract class StudyRxFragment<P extends IBasePresenter, V extends IBaseV
             mRootView = inflater.inflate(getLayoutId(), null);
             bindUiCommand(mRootView);
         } else {
+            //复用之前的view，ViewPager+Fragment的使用过程
+            // ，可以用到避免重复创建view
             ViewGroup viewGroup = (ViewGroup) mRootView.getParent();
             if (viewGroup != null) {
                 viewGroup.removeView(mRootView);

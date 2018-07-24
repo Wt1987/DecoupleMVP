@@ -1,5 +1,7 @@
 package com.util;
 
+import android.text.TextUtils;
+
 import com.common.CommonParamsInterceptor;
 import com.common.HeaderIntercept;
 import com.common.RetryIntercept;
@@ -31,8 +33,52 @@ public class HttpDirector {
     private boolean isUseLogger;
     protected Map<String, String> commonParamsMap;
 
+    private String baseUrl;
 
     protected static Retrofit retrofit;
+
+    public void HttpDirector(){
+
+    }
+
+
+    private HttpDirector(Builder b) {
+        if (b.connectTimeout > 0) {
+            connectTimeout = b.connectTimeout;
+        }
+
+        if (b.responseTimeout > 0) {
+            responseTimeout = b.responseTimeout;
+        }
+
+        if (b.retry > 0) {
+            retry = b.retry;
+        }
+        if (b.maxConnections > 0) {
+            maxConnections = b.maxConnections;
+        }
+        if (b.headers != null) {
+            headers = b.headers;
+        }
+        if (TextUtils.isEmpty(b.baseUrl)) {
+            baseUrl = b.baseUrl;
+        }
+        if (b.commonParamsMap != null) {
+            commonParamsMap = b.commonParamsMap;
+        }
+        if (isUseLogger) {
+            isUseLogger = b.isUseLogger;
+        }
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(TextUtils.isEmpty(b.baseUrl) ? UrlConstants.API_SERVER_URL : baseUrl)
+                .client(getHttpClientFromBuilder(b))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())   // 新的配置
+                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))
+                .build();
+
+
+    }
 
     private HttpDirector() {
 
@@ -57,7 +103,7 @@ public class HttpDirector {
     }
 
 
-    private HttpDirector(Builder b) {
+    public  Retrofit initHttpClient(Builder b) {
         if (b.connectTimeout > 0) {
             connectTimeout = b.connectTimeout;
         }
@@ -88,9 +134,10 @@ public class HttpDirector {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())   // 新的配置
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().create()))
                 .build();
-
-
+        return retrofit;
     }
+
+
 
     public Retrofit getApiRetrofit(){
         return  retrofit;
@@ -118,7 +165,6 @@ public class HttpDirector {
         if (b.responseTimeout > 0) {
             mBuilder.writeTimeout(b.responseTimeout, TimeUnit.SECONDS);
         }
-
 
         if (b.retry > 0) {
             mBuilder.addInterceptor(new RetryIntercept(b.retry));
@@ -161,6 +207,7 @@ public class HttpDirector {
         private int maxConnections;
         private Map<String, String> headers;
         private boolean isUseLogger;
+        private String baseUrl;
         private Map<String, String> commonParamsMap;
 
         public Builder connectTimeout(int connectTimeout) {
@@ -186,6 +233,11 @@ public class HttpDirector {
             return this;
         }
 
+        public Builder baseUrl(String baseUrl) {
+
+            this.baseUrl = baseUrl;
+            return this;
+        }
         public Builder maxConnections(int maxConnections) {
 
             this.maxConnections = maxConnections;
