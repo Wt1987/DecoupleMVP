@@ -5,6 +5,8 @@ package mvp.present;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.trello.rxlifecycle2.LifecycleProvider;
+
 import java.lang.ref.WeakReference;
 
 import mvp.iview.IBaseView;
@@ -77,6 +79,21 @@ public class BasePresenterImpl<V extends IBaseView> implements IBasePresenter<V>
 
 
         return null;
+    }
+
+    /**
+     * 对 ACTIVITY 生命周期进行管理
+     * @return
+     */
+    protected LifecycleProvider getLifecycleProvider() {
+
+        V mView = getView();
+        LifecycleProvider provider = null;
+        if (null != mView &&
+                mView instanceof LifecycleProvider) {
+            provider =  (LifecycleProvider)mView;
+        }
+        return provider;
     }
 
     public boolean isUiThread(){

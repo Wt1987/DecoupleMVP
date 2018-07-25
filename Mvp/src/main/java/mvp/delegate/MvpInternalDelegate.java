@@ -10,11 +10,12 @@ import mvp.present.IBasePresenter;
  **/
 public class MvpInternalDelegate<P extends IBasePresenter, V extends IBaseView> {
 
-    BaseDelegateCallback<P, V> callback;
+    private BaseDelegateCallback<P, V> callback;
 
-    public MvpInternalDelegate(BaseDelegateCallback<P, V> callback) {
+    protected MvpInternalDelegate(BaseDelegateCallback<P, V> callback) {
         this.callback = callback;
     }
+
 
     public P createPresenter() {
         P p = callback.getPresenter();
@@ -28,6 +29,7 @@ public class MvpInternalDelegate<P extends IBasePresenter, V extends IBaseView> 
         return p;
     }
 
+    @SuppressWarnings("unchecked")
     public void attachView() {
 
         callback.getPresenter().attachView(callback.getMvpView());

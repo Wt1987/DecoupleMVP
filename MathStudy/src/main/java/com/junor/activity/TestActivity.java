@@ -40,7 +40,7 @@ public class TestActivity extends StudyRxActivity<TestPresent, LoginContract.Log
      */
     @Override
     protected TestPresent InitPresenter() {
-        return new TestPresent(this);
+        return new TestPresent();
     }
 
     /**

@@ -3,6 +3,7 @@ package com.junor.mvp.model;
 import com.junor.bean.LoginResponse;
 import com.junor.http.LoginHttpApiService;
 import com.junor.mvp.contract.LoginContract;
+import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import com.util.HttpDirector;
 
@@ -21,25 +22,24 @@ public class LoginModel {
 
     private LoginContract.onGetData listener;
 
-    LoginHttpApiService mHttpApiService ;
+    private LoginHttpApiService mHttpApiService ;
 
+    private LifecycleProvider mLifecycleProvider ;
+
+
+    public void setmLifecycleProvider(LifecycleProvider mLifecycleProvider) {
+        this.mLifecycleProvider = mLifecycleProvider;
+    }
 
     public LoginModel(){
-
-        HttpDirector.Builder mBuilder = new HttpDirector.Builder()
-                .connectTimeout(30)
-                .isUseLoger(true)
-                .responseTimeout(30)
-                .retry(8);
-
-        mHttpApiService = HttpDirector.getInstance().initHttpClient(mBuilder).create(LoginHttpApiService.class);
-
+        mHttpApiService = HttpDirector.getInstance().getApiRetrofit().create(LoginHttpApiService.class);
     }
 
     public void setListener(LoginContract.onGetData listener) {
         this.listener = listener;
     }
 
+    @SuppressWarnings("unchecked")
     public void loginIn() {
 
         mHttpApiService
@@ -50,6 +50,7 @@ public class LoginModel {
                         ,0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(mLifecycleProvider.<LoginResponse>bindToLifecycle())
                 .subscribe(new Observer<LoginResponse>(){
 
                     @Override

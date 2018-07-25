@@ -9,14 +9,15 @@ import mvp.present.IBasePresenter;
  * description:
  **/
 public class FragmentDelegateImpl<P extends IBasePresenter, V extends IBaseView> implements FragmentDelegate {
-    private BaseDelegateCallback<P, V> basemvpDelegateCallback;
+    private BaseDelegateCallback<P, V> baseMvpDelegateCallback;
     private MvpInternalDelegate<P, V> mvpInternalDelegate;
 
     public FragmentDelegateImpl(BaseDelegateCallback<P, V> basemvpDelegateCallback) {
-        if (basemvpDelegateCallback == null)
-            throw new NullPointerException("the basemvpDelegateCallback in FragmentDelegate is null");
-        this.basemvpDelegateCallback = basemvpDelegateCallback;
-        mvpInternalDelegate = new MvpInternalDelegate<>(this.basemvpDelegateCallback);
+        if (basemvpDelegateCallback == null){
+            throw new NullPointerException("the baseDelegateCallback in FragmentDelegate is null");
+        }
+        this.baseMvpDelegateCallback = basemvpDelegateCallback;
+        mvpInternalDelegate = new MvpInternalDelegate<>(this.baseMvpDelegateCallback);
 
     }
 

@@ -13,13 +13,15 @@ import java.util.List;
 
 import base.util.PermissionsResultListener;
 import mvp.common.StudyRxActivity;
+import mvp.iview.IBaseView;
+import mvp.present.IBasePresenter;
 
 /**
  * author : taowang
  * date :2018/7/23
  * description:
  **/
-public abstract class BaseActivity extends StudyRxActivity {
+public abstract class BaseActivity<P extends IBasePresenter, V extends IBaseView> extends StudyRxActivity {
 
     //权限代码可以删除，如何在基础中添加公共方法，按项目需求改变
     protected List<String> mListPermissions = new ArrayList<>();
