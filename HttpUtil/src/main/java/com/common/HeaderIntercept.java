@@ -17,11 +17,11 @@ public class HeaderIntercept implements Interceptor {
     public Map<String, String> headers;
 
     public HeaderIntercept(Map<String, String> header) {
-        this.headers = headers;
+        this.headers = header;
     }
 
     @Override
-    public Response intercept(Interceptor.Chain chain) throws IOException {
+    public Response intercept(Chain chain) throws IOException {
 
         Request.Builder mBuilder = chain.request()
                 .newBuilder();
