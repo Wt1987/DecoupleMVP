@@ -32,7 +32,7 @@ public class LoginModel {
     }
 
     public LoginModel(){
-        mHttpApiService = HttpDirector.getInstance().getApiRetrofit().create(LoginHttpApiService.class);
+        mHttpApiService = HttpDirector.getInstance().createReq(LoginHttpApiService.class);
     }
 
     public void setListener(LoginContract.onGetData listener) {
