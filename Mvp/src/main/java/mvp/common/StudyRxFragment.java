@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import base.butterKnife.KnifeCommand;
-import base.eventBus.BusImpl;
 import mvp.delegate.FragmentDelegate;
 import mvp.delegate.FragmentDelegateImpl;
 import mvp.delegate.FragmentMvpDelegateCallback;
@@ -65,9 +64,7 @@ public abstract class StudyRxFragment<P extends IBasePresenter, V extends IBaseV
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (useEventBus()) {
-            BusImpl.getInstance().register(this);
-        }
+
         bindEvent();
         initSaveInstanceState(savedInstanceState);
         initData();
@@ -77,9 +74,7 @@ public abstract class StudyRxFragment<P extends IBasePresenter, V extends IBaseV
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (useEventBus()) {
-            BusImpl.getInstance().register(this);
-        }
+
         if (mPresenter != null) {
             mPresenter.detachView();
         }

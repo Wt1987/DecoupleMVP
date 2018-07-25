@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import base.butterKnife.KnifeCommand;
-import base.eventBus.BusImpl;
 import mvp.delegate.FragmentDelegate;
 import mvp.delegate.FragmentDelegateImpl;
 import mvp.delegate.FragmentMvpDelegateCallback;
@@ -63,10 +62,7 @@ public abstract class StudyLazyRxFragment<P extends IBasePresenter, V extends IB
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (useEventBus()) {
-            BusImpl.getInstance().register(this);
-        }
-        bindEvent();
+
         initSaveInstanceState(savedInstanceState);
         initData();
     }
@@ -75,9 +71,6 @@ public abstract class StudyLazyRxFragment<P extends IBasePresenter, V extends IB
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (useEventBus()) {
-            BusImpl.getInstance().register(this);
-        }
         if (mPresenter != null) {
             mPresenter.detachView();
         }
@@ -111,14 +104,7 @@ public abstract class StudyLazyRxFragment<P extends IBasePresenter, V extends IB
     public void bindUiCommand(View rootView) {
         KnifeCommand.bind(this);
     }
-    /**
-     * 是否使用EventBus
-     *
-     * @return
-     */
-    public boolean useEventBus() {
-        return false;
-    }
+
 
     //暴露一个创建的方法用于创建presenter
     protected abstract P InitPresenter();
@@ -159,9 +145,7 @@ public abstract class StudyLazyRxFragment<P extends IBasePresenter, V extends IB
         return 0;
     }
 
-    public void bindEvent() {
 
-    }
     @Override
     protected void onVisible(boolean isVisible) {
         if (isVisible) {

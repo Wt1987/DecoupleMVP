@@ -10,7 +10,6 @@ import android.widget.Toast;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import base.butterKnife.KnifeCommand;
-import base.eventBus.BusImpl;
 import mvp.delegate.ActivityDelegate;
 import mvp.delegate.ActivityDelegateImpl;
 import mvp.delegate.ActivityMvpDelegateCallback;
@@ -45,7 +44,6 @@ public abstract class StudyRxActivity<P extends IBasePresenter, V extends IBaseV
         if (getLayoutId() > 0) {
             setContentView(getLayoutId());
             bindUiCommand(null);
-            bindEvent();
         }
         initSaveInstanceState(savedInstanceState);
         initData();
@@ -56,9 +54,7 @@ public abstract class StudyRxActivity<P extends IBasePresenter, V extends IBaseV
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (useEventBus()) {
-            BusImpl.getInstance().unregister(this);
-        }
+
         mActivityDelegate.onDestroy();
         mPresenter = null;
     }
@@ -67,9 +63,7 @@ public abstract class StudyRxActivity<P extends IBasePresenter, V extends IBaseV
     @Override
     protected void onStart() {
         super.onStart();
-        if (useEventBus()) {
-            BusImpl.getInstance().register(this);
-        }
+
     }
 
 
@@ -109,14 +103,7 @@ public abstract class StudyRxActivity<P extends IBasePresenter, V extends IBaseV
         KnifeCommand.bind(this);
     }
 
-    /**
-     * 是否使用EventBus
-     *
-     * @return
-     */
-    public boolean useEventBus() {
-        return false;
-    }
+
 
     /**
      * 用于创建presenter
@@ -177,12 +164,7 @@ public abstract class StudyRxActivity<P extends IBasePresenter, V extends IBaseV
         return 0;
     }
 
-    /**
-     * 使用rxbus时实现
-     */
-    public void bindEvent() {
 
-    }
     /**
      * 获取布局id
      *
