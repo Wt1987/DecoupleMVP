@@ -19,6 +19,7 @@ public class HttpClientConfiguration {
     public int retry;
     public int maxConnections;
     public Map<String, String> headers;
+    public Map<String, String> commonParamsInterceptor;
     public boolean isUseLogger;
     public String baseUrl;
     public ArrayList<Interceptor> listInterceptor;
@@ -32,12 +33,22 @@ public class HttpClientConfiguration {
         private int responseTimeout;
         private int retry;
         private int maxConnections;
+        //可以用于添加共有的header信息
         private Map<String, String> headers;
+        //可以用于添加共有的请求信息
+        private Map<String, String> commonParamsInterceptor;
         private boolean isUseLogger;
         private String baseUrl;
         private ArrayList<Interceptor> listInterceptor;
         private ArrayList<Interceptor> listNetworkInterceptor;
         private SSLSocketFactory sslSocketFactory;
+
+
+        public Builder commonParamsInterceptor(Map<String, String> commonParamsInterceptor) {
+
+            this.commonParamsInterceptor = commonParamsInterceptor;
+            return this;
+        }
 
         public Builder listNetworkInterceptor(ArrayList<Interceptor> listNetworkInterceptor) {
 
@@ -101,6 +112,7 @@ public class HttpClientConfiguration {
     private HttpClientConfiguration(Builder builder) {
         this.connectTimeout = builder.connectTimeout;
         this.responseTimeout = builder.responseTimeout;
+        this.commonParamsInterceptor = builder.commonParamsInterceptor;
         this.retry = builder.retry;
         this.maxConnections = builder.maxConnections;
         this.headers = builder.headers;

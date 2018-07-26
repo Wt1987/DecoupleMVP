@@ -43,15 +43,15 @@ public class LoginModel {
     public void loginIn() {
 
         mHttpApiService
-                .login("android","\t{\"loginAccount\":\"ceshi\",\"password\":\"123\"}"
-                        ,"1","token\tU2R2UXVLbkdBRGpIT3ZhVUhxbnFMYVN4QUlj" +
+                .login("android", "\t{\"loginAccount\":\"ceshi\",\"password\":\"123\"}"
+                        , "1", "token\tU2R2UXVLbkdBRGpIT3ZhVUhxbnFMYVN4QUlj" +
                                 "a05MMVNKbHQzZVJUaTBHWG56amZibkd4SDVEdGMwdUVDbGdRZFpxZXZKVnJL" +
                                 "aWcyUUYyd3J5eG1DV0ElM0QlM0Q="
-                        ,0)
+                        , 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(mLifecycleProvider.<LoginResponse>bindToLifecycle())
-                .subscribe(new Observer<LoginResponse>(){
+                .subscribe(new Observer<LoginResponse>() {
 
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -74,9 +74,38 @@ public class LoginModel {
                     }
                 });
 
+    }
 
+    @SuppressWarnings("unchecked")
+        public void test() {
 
+            mHttpApiService
+                    .TEST("sdfs")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .compose(mLifecycleProvider.<LoginResponse>bindToLifecycle())
+                    .subscribe(new Observer<LoginResponse>() {
 
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onNext(LoginResponse loginResponse) {
+                            listener.onSuccess(loginResponse);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            listener.onFail(e.getLocalizedMessage());
+                        }
+
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
 
 
 

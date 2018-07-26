@@ -1,13 +1,14 @@
 package com.junor.http;
 
-import com.http.IBaseApiService;
 import com.junor.bean.LoginResponse;
 import com.junor.constants.UrlConstants;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * author : taowang
@@ -26,4 +27,11 @@ public interface LoginHttpApiService {
             , @Field("v") String version
             , @Field("token") String token
             , @Field("reqId") int id);
+
+
+    /**
+     * @return
+     */
+    @GET(UrlConstants.test_Login)
+    Observable<LoginResponse> TEST(@Query("p") String type);
 }

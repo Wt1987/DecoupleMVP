@@ -3,6 +3,7 @@ package com.common;
 import java.io.IOException;
 import java.util.Map;
 
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
@@ -29,29 +30,27 @@ public class CommonParamsInterceptor implements Interceptor {
         //获取到方法
         String method = request.method();
         if ("GET".equals(method)) {
-            HttpUrl httpUrl = request.url();
-            String url = httpUrl.toString();
-            int index = url.indexOf("?");
-            if (index > 0) {
-                for (Map.Entry<String, String> entry : commonParamsMap.entrySet()) {
-                    url = url + "&" + entry.getKey() + "=" + entry.getValue() ;
-                }
-            } else {
-                int tempStep = 0 ;
-                for (Map.Entry<String, String> entry : commonParamsMap.entrySet()) {
-
-                    if(tempStep == 0){
-                        url = "?" + url + entry.getKey() + "=" + entry.getValue() ;
-                        tempStep ++;
-                    }
-                    url = url + "&" + entry.getKey() + "=" + entry.getValue() ;
-
-                }
-
+            HttpUrl url = request.url();
+            HttpUrl.Builder mBuilder = url.newBuilder();
+            for (Map.Entry<String, String> entry : commonParamsMap.entrySet()) {
+                mBuilder.addEncodedQueryParameter(entry.getKey(),entry.getValue());
             }
+            HttpUrl mewUrl = mBuilder.build();
+            request = request.newBuilder().url(mewUrl).build();
 
-            request = request.newBuilder().url(url).build();
-        }else if ("POST".equals(method)){
+        }else if (request.body() instanceof FormBody) {
+            FormBody.Builder builder = new FormBody.Builder();
+            FormBody body = (FormBody) request.body();
+            //将以前的参数添加
+            for (int i = 0; i < body.size(); i++) {
+                builder.add(body.encodedName(i), body.encodedValue(i));
+            }
+            //追加新的参数
+            for (Map.Entry<String, String> entry : commonParamsMap.entrySet()) {
+                builder.add(entry.getKey(),entry.getValue());
+            }
+            //构造新的请求体
+            request = request.newBuilder().post(builder.build()).build();
 
         }
         return chain.proceed(request);

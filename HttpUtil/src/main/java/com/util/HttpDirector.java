@@ -2,6 +2,7 @@ package com.util;
 
 import android.text.TextUtils;
 
+import com.common.CommonParamsInterceptor;
 import com.common.HeaderIntercept;
 import com.common.RetryIntercept;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
@@ -124,6 +125,10 @@ public class HttpDirector {
         if (config.headers != null) {
             HeaderIntercept mHeaderIntercept = new HeaderIntercept(config.headers);
             mBuilder.addInterceptor(mHeaderIntercept);
+        }
+        if (config.commonParamsInterceptor != null) {
+            CommonParamsInterceptor mCommonParamsInterceptor = new CommonParamsInterceptor(config.commonParamsInterceptor);
+            mBuilder.addInterceptor(mCommonParamsInterceptor);
         }
         if (config.isUseLogger) {
             HttpLoggingInterceptor mHttpLoggingInterceptor = new HttpLoggingInterceptor();

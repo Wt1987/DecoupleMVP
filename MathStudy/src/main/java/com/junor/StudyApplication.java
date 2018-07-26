@@ -24,10 +24,13 @@ public class StudyApplication extends Application{
 
         Map<String, String> headers = new HashMap<>();
         headers.put("test","test1");
+        Map<String, String> map2 = new HashMap<>();
+        map2.put("mpa","mpatest1");
         HttpClientConfiguration mConfig = new HttpClientConfiguration.Builder()
                 .connectTimeout(30)
                 .isUseLoger(true)
                 .responseTimeout(30)
+                .commonParamsInterceptor(map2)
                 .headers(headers)
                 .baseUrl("http://api.1196u.cn/")
                 .retry(8).build();

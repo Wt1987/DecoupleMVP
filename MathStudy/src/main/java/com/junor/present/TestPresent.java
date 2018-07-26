@@ -26,7 +26,7 @@ public class TestPresent extends BasePresenterImpl<LoginContract.LoginView>
         mLoginView = getView();
         model.setListener(this);
         model.setmLifecycleProvider(getLifecycleProvider());
-        model.loginIn();
+        model.test();
     }
 
 
