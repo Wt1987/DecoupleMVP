@@ -32,14 +32,19 @@ public abstract class StudyRxActivity<P extends IBasePresenter, V extends IBaseV
     //P层的操作类
     protected P mPresenter;
 
+    protected boolean isUseMvp = true;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
 
-        mActivityDelegate = new ActivityDelegateImpl<>(this);
-        mActivityDelegate.onCreate();
+        if(isUseMvp){
+            mActivityDelegate = new ActivityDelegateImpl<>(this);
+            mActivityDelegate.onCreate();
+        }
 
         if (getLayoutId() > 0) {
             setContentView(getLayoutId());
@@ -54,9 +59,11 @@ public abstract class StudyRxActivity<P extends IBasePresenter, V extends IBaseV
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if(isUseMvp){
+            mActivityDelegate.onDestroy();
+            mPresenter = null;
+        }
 
-        mActivityDelegate.onDestroy();
-        mPresenter = null;
     }
 
 
@@ -70,20 +77,28 @@ public abstract class StudyRxActivity<P extends IBasePresenter, V extends IBaseV
     @Override
     protected void onResume() {
         super.onResume();
-        mActivityDelegate.onResume();
+        if(isUseMvp){
+            mActivityDelegate.onResume();
+        }
+
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
-        mActivityDelegate.onPause();
+        if(isUseMvp){
+            mActivityDelegate.onPause();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mActivityDelegate.onStop();
+        if(isUseMvp){
+            mActivityDelegate.onStop();
+        }
+
     }
 
     @Override

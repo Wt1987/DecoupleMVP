@@ -1,1 +1,29 @@
-/build
+
+#Android generated
+bin
+gen
+
+#Eclipse
+.project
+.classpath
+.settings
+
+#Command line
+local.properties
+proguard-project.txt
+
+
+# Android Studio
+.gradle
+local.properties
+.idea/workspace.xml
+.idea/libraries
+.DS_Store
+build
+#IntelliJ IDEA
+.idea
+*.iml
+classes
+out
+production
+
