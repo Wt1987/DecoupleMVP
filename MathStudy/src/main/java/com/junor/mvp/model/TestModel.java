@@ -1,7 +1,10 @@
 package com.junor.mvp.model;
 
+import android.app.Activity;
+
 import com.api.IdeaHttpApi;
 import com.common.bean.BaseResultEntity;
+import com.dialog.DefaultHttpUiShow;
 import com.junor.bean.TestResponse;
 import com.junor.http.TestHttpApiService;
 import com.junor.mvp.contract.TestContract;
@@ -23,6 +26,8 @@ public class TestModel {
 
     private LifecycleProvider mLifecycleProvider ;
 
+    private Activity mActivity;
+
 
     public void setmLifecycleProvider(LifecycleProvider mLifecycleProvider) {
         this.mLifecycleProvider = mLifecycleProvider;
@@ -36,6 +41,10 @@ public class TestModel {
         this.listener = listener;
     }
 
+    public void setmActivity(Activity mActivity) {
+        this.mActivity = mActivity;
+    }
+
     @SuppressWarnings("unchecked")
     public void loginIn() {
 
@@ -46,9 +55,10 @@ public class TestModel {
                                 "a05MMVNKbHQzZVJUaTBHWG56amZibkd4SDVEdGMwdUVDbGdRZFpxZXZKVnJL" +
                                 "aWcyUUYyd3J5eG1DV0ElM0QlM0Q="
                         ,0)
+                .compose(mLifecycleProvider.<TestResponse>bindToLifecycle())
                 .compose(RxSchedulersHelper.<BaseResultEntity<TestResponse>>inMainCommand())
                 .compose(RxResultHelper.<TestResponse>handleResult())
-                .compose(mLifecycleProvider.<TestResponse>bindToLifecycle())
+                .compose(DefaultHttpUiShow.<TestResponse>applyProgressBar(mActivity))
                 .subscribe(new RxResultSubscriber<TestResponse>(){
                     @Override
                     public void _onNext(TestResponse testResponse) {

@@ -19,14 +19,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation rootProject.libraries.junit
-    implementation rootProject.libraries.rxlifecycle
-    implementation rootProject.libraries.rxlifecycle_android
-    implementation rootProject.libraries.rxlifecycle_components
-    implementation rootProject.libraries.rxjava2
-    implementation rootProject.libraries.butterknife
+    testImplementation rootProject.ext.libraries.junit
+    implementation rootProject.ext.libraries.rxlifecycle
+    implementation rootProject.ext.libraries.rxlifecycle_android
+    implementation rootProject.ext.libraries.rxlifecycle_components
+    implementation rootProject.ext.libraries.rxjava2
+    implementation rootProject.ext.libraries.butterknife
 
-    implementation rootProject.libraries.rxpermissions2
+    implementation rootProject.ext.libraries.rxpermissions2
 
 
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
