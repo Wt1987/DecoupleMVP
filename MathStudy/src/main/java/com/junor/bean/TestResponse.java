@@ -2,10 +2,8 @@ package com.junor.bean;
 
 import java.util.ArrayList;
 
-/**
- * Created by wangtao on 2018/1/14.
- */
-public class ResponseResult {
+public class TestResponse {
+
     public String token;
     public String roleType;
     public String loginAccount;

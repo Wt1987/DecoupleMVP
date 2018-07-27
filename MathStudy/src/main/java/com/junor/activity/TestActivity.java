@@ -4,15 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import com.junor.bean.LoginResponse;
-import com.junor.mvp.contract.LoginContract;
+import com.junor.bean.TestResponse;
+import com.junor.mvp.contract.TestContract;
 import com.junor.present.TestPresent;
 
 import math.junior.com.juniormathstudy.R;
 import mvp.common.StudyRxActivity;
 
-public class TestActivity extends StudyRxActivity<TestPresent, LoginContract.LoginView>
-        implements LoginContract.LoginView{
+public class TestActivity extends StudyRxActivity<TestPresent, TestContract.LoginView>
+        implements TestContract.LoginView{
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,9 +61,9 @@ public class TestActivity extends StudyRxActivity<TestPresent, LoginContract.Log
 
 
     @Override
-    public void loginSuccess(LoginResponse data) {
+    public void loginSuccess(TestResponse data) {
 
-        showToast(data.resultMap.chineseName);
+        showToast(data.chineseName);
     }
 
     @Override

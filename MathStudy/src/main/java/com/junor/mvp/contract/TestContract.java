@@ -1,21 +1,21 @@
 package com.junor.mvp.contract;
 
 
-import com.junor.bean.LoginResponse;
+import com.junor.bean.TestResponse;
 
 import mvp.iview.IBaseView;
 import mvp.present.IBasePresenter;
 
 /**
  * author : taowang
- * date :2018/7/21
+ * date :2018/7/25
  * description:
  **/
-public class LoginContract {
+public class TestContract {
 
     public interface LoginView extends IBaseView {
 
-        void loginSuccess(LoginResponse data);
+        void loginSuccess(TestResponse data);
 
         void loginFail(String data);
     }
@@ -29,7 +29,7 @@ public class LoginContract {
 
     //这是Model的数据获取接口
     public interface onGetData {
-        void onSuccess(LoginResponse data);
+        void onSuccess(TestResponse data);
 
         void onFail(String error);
     }

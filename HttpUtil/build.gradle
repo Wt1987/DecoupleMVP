@@ -25,6 +25,10 @@ dependencies {
     implementation rootProject.ext.libraries.stetho_okhttp3
     implementation rootProject.ext.libraries.stetho
     implementation rootProject.ext.libraries.supportV4
+    implementation rootProject.ext.libraries.rxlifecycle
+    implementation rootProject.ext.libraries.rxlifecycle_android
+    implementation rootProject.ext.libraries.rxlifecycle_components
+    implementation rootProject.ext.libraries.rxjava2
 
     implementation rootProject.ext.libraries.logging_interceptor
 
