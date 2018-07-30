@@ -19,6 +19,7 @@ public class HttpClientConfiguration {
     public int retry;
     public int maxConnections;
     public Map<String, String> headers;
+    public Map<String, String> commonParams;
     public boolean isUseLogger;
     public String baseUrl;
     public ArrayList<Interceptor> listInterceptor;
@@ -33,6 +34,7 @@ public class HttpClientConfiguration {
         private int retry;
         private int maxConnections;
         private Map<String, String> headers;
+        public Map<String, String> commonParams;
         private boolean isUseLogger;
         private String baseUrl;
         private ArrayList<Interceptor> listInterceptor;
@@ -86,6 +88,11 @@ public class HttpClientConfiguration {
             return this;
         }
 
+        public Builder commonParams(Map<String, String> commonParams) {
+
+            this.commonParams = commonParams;
+            return this;
+        }
         public Builder isUseLoger(boolean isUseLoger) {
 
             this.isUseLogger = isUseLoger;
@@ -110,6 +117,7 @@ public class HttpClientConfiguration {
         this.listInterceptor = builder.listInterceptor;
         this.listNetworkInterceptor = builder.listNetworkInterceptor;
         this.sslSocketFactory = builder.sslSocketFactory;
+        this.commonParams = builder.commonParams;
     }
 
 }
